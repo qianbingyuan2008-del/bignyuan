@@ -21,7 +21,7 @@ document.querySelector('#app').innerHTML = `
       </div>
       <div class="hero-visual reveal delay-2">
         <div class="photo-frame">
-          <img src="/images/qianbingyuan-portrait.jpg" alt="钱炳元在徽州宏村的生活照" />
+          <img src="./public/images/qianbingyuan-portrait.jpg" alt="钱炳元在徽州宏村的生活照" />
         </div>
         <p class="vertical">保持热爱 · 奔赴山海</p>
         <div class="year-stamp"><b>08</b><span>BORN IN<br>2008</span></div>
@@ -45,7 +45,7 @@ document.querySelector('#app').innerHTML = `
 
     <section class="moments" id="moments">
       <div class="moment-photo">
-        <img src="/images/qianbingyuan-mountain.jpg" alt="钱炳元登山时的生活照" loading="lazy" />
+        <img src="./public/images/qianbingyuan-mountain.jpg" alt="钱炳元登山时的生活照" loading="lazy" />
         <span class="photo-no">02</span>
       </div>
       <div class="moment-copy">
