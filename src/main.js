@@ -1,5 +1,3 @@
-import './style.css'
-
 document.querySelector('#app').innerHTML = `
   <header class="nav">
     <a class="brand" href="#top" aria-label="返回首页">QBY<span>.</span></a>
