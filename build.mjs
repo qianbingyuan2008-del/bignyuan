@@ -4,11 +4,14 @@ await rm('dist', { recursive: true, force: true })
 await mkdir('dist/src', { recursive: true })
 await mkdir('dist/server', { recursive: true })
 await mkdir('dist/.openai', { recursive: true })
+await mkdir('dist/public', { recursive: true })
 await cp('index.html', 'dist/index.html')
 await cp('src/main.js', 'dist/src/main.js')
 await cp('src/style.css', 'dist/src/style.css')
 await cp('.openai/hosting.json', 'dist/.openai/hosting.json')
-await cp('public', 'dist', { recursive: true })
+await cp('public', 'dist/public', { recursive: true })
+await cp('CNAME', 'dist/CNAME')
+await cp('.nojekyll', 'dist/.nojekyll')
 
 const portrait = (await readFile('public/images/qianbingyuan-portrait.jpg')).toString('base64')
 const mountain = (await readFile('public/images/qianbingyuan-mountain.jpg')).toString('base64')
@@ -17,10 +20,10 @@ const js = await readFile('src/main.js', 'utf8')
 let html = await readFile('index.html', 'utf8')
 
 html = html
-  .replace('<link rel="stylesheet" href="/src/style.css" />', `<style>${css}</style>`)
-  .replace('<script type="module" src="/src/main.js"></script>', `<script type="module">${js}</script>`)
-  .replace('/images/qianbingyuan-portrait.jpg', `data:image/jpeg;base64,${portrait}`)
-  .replace('/images/qianbingyuan-mountain.jpg', `data:image/jpeg;base64,${mountain}`)
+  .replace('<link rel="stylesheet" href="./src/style.css" />', `<style>${css}</style>`)
+  .replace('<script type="module" src="./src/main.js"></script>', `<script type="module">${js}</script>`)
+  .replace('./public/images/qianbingyuan-portrait.jpg', `data:image/jpeg;base64,${portrait}`)
+  .replace('./public/images/qianbingyuan-mountain.jpg', `data:image/jpeg;base64,${mountain}`)
 
 const worker = `const html = ${JSON.stringify(html)};
 export default {
