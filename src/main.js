@@ -1,3 +1,119 @@
+let savedTheme = null
+try {
+  savedTheme = localStorage.getItem('qby-theme')
+} catch {
+  savedTheme = null
+}
+const initialTheme = savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+document.documentElement.dataset.theme = initialTheme
+
+const learningEntries = [
+  {
+    time: '现在',
+    status: '学习中',
+    tone: 'active',
+    title: '计算机基础知识',
+    description: '从基础概念开始建立知识框架，逐步理解计算机如何工作。',
+    next: '下一步：补充第一条真实学习笔记'
+  },
+  {
+    time: '近期',
+    status: '探索中',
+    tone: 'active',
+    title: 'AI 软件使用',
+    description: '了解常用 AI 工具，并尝试把它们运用到学习、整理和创作中。',
+    next: '下一步：记录使用过的软件与心得'
+  },
+  {
+    time: '大学阶段',
+    status: '准备开始',
+    tone: 'planned',
+    title: '计算机相关专业课程',
+    description: '进入安徽理工大学后，根据实际课程持续更新学习方向与阶段成果。',
+    next: '下一步：开学后补充课程与目标'
+  }
+]
+
+const projects = [
+  {
+    status: '持续完善',
+    tone: 'active',
+    number: '01',
+    title: '个人主页',
+    description: '用照片和文字介绍自己，并持续加入学习成长、作品与生活记录。',
+    tags: ['网页设计', '内容整理', '响应式布局'],
+    action: '正在访问',
+    href: '#top'
+  },
+  {
+    status: '计划中',
+    tone: 'planned',
+    number: '02',
+    title: '第一个编程项目',
+    description: '为大学阶段预留的第一个真实编程作品位置，完成后将展示过程与成果。',
+    tags: ['等待内容', '可持续更新'],
+    action: '等待开始',
+    href: '#contact'
+  },
+  {
+    status: '计划中',
+    tone: 'planned',
+    number: '03',
+    title: 'AI 使用记录',
+    description: '整理使用过的 AI 软件、实际用途、提示词案例和自己的学习心得。',
+    tags: ['AI 工具', '学习记录'],
+    action: '等待补充',
+    href: '#contact'
+  }
+]
+
+const skills = [
+  { name: '计算机基础', stage: 2, state: '入门学习中' },
+  { name: 'AI 软件', stage: 2, state: '入门学习中' },
+  { name: '网页开发', stage: 1, state: '准备学习' },
+  { name: '篮球与唱歌', stage: 3, state: '长期热爱' }
+]
+
+const learningMarkup = learningEntries.map((entry, index) => `
+  <article class="timeline-item">
+    <div class="timeline-meta">
+      <span>${String(index + 1).padStart(2, '0')}</span>
+      <time>${entry.time}</time>
+    </div>
+    <div class="timeline-content">
+      <p class="status-pill ${entry.tone}">${entry.status}</p>
+      <h3>${entry.title}</h3>
+      <p>${entry.description}</p>
+      <small>${entry.next}</small>
+    </div>
+  </article>
+`).join('')
+
+const projectMarkup = projects.map((project) => `
+  <article class="project-card">
+    <div class="project-topline">
+      <span>${project.number}</span>
+      <p class="status-pill ${project.tone}">${project.status}</p>
+    </div>
+    <h3>${project.title}</h3>
+    <p>${project.description}</p>
+    <div class="project-tags">${project.tags.map((tag) => `<span>${tag}</span>`).join('')}</div>
+    <a href="${project.href}">${project.action} <span>↗</span></a>
+  </article>
+`).join('')
+
+const skillMarkup = skills.map((skill) => `
+  <article class="skill-row">
+    <div>
+      <h3>${skill.name}</h3>
+      <p>${skill.state}</p>
+    </div>
+    <div class="stage-dots" aria-label="${skill.name}当前阶段：${skill.state}">
+      ${Array.from({ length: 4 }, (_, index) => `<i class="${index < skill.stage ? 'filled' : ''}"></i>`).join('')}
+    </div>
+  </article>
+`).join('')
+
 document.querySelector('#app').innerHTML = `
   <a class="skip-link" href="#top">跳到主要内容</a>
 
@@ -7,11 +123,14 @@ document.querySelector('#app').innerHTML = `
       <span></span><span></span>
     </button>
     <nav id="site-nav" aria-label="主导航">
-      <a href="#profile">个人简介</a>
-      <a href="#about">关于我</a>
-      <a href="#now">现在</a>
-      <a href="#interests">我的热爱</a>
+      <a href="#profile">首页</a>
+      <a href="#learning">学习成长</a>
+      <a href="#projects">项目作品</a>
+      <a href="#interests">兴趣生活</a>
       <a class="nav-contact" href="#contact">联系我</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="切换深浅主题">
+        <span aria-hidden="true">◐</span><b data-theme-label>深色</b>
+      </button>
     </nav>
   </header>
 
@@ -95,16 +214,49 @@ document.querySelector('#app').innerHTML = `
       </div>
     </section>
 
+    <section class="growth" id="learning" aria-labelledby="learning-title">
+      <div class="section-heading">
+        <p class="section-index">03 / 学习成长</p>
+        <div>
+          <p class="kicker">持续记录，比进度更重要</p>
+          <h2 id="learning-title">把每一步，<br>变成<span>成长轨迹</span>。</h2>
+        </div>
+        <p>这里将持续记录计算机与 AI 的学习过程。当前内容依据已有信息建立，之后可以随时替换为真实日志。</p>
+      </div>
+      <div class="timeline">${learningMarkup}</div>
+    </section>
+
+    <section class="projects" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading light-heading">
+        <p class="section-index light">04 / 项目作品</p>
+        <div>
+          <p class="kicker">从第一个小作品开始</p>
+          <h2 id="projects-title">把想法，<br>做成<span>看得见的成果</span>。</h2>
+        </div>
+        <p>没有虚构的经历：已经完成的真实展示，尚未开始的明确标为计划中。</p>
+      </div>
+      <div class="project-grid">${projectMarkup}</div>
+
+      <div class="skill-map" id="skills">
+        <div class="skill-intro">
+          <p class="section-index light">技能成长地图</p>
+          <h3>用阶段记录进步，<br>不用虚假的百分比。</h3>
+          <p>四个圆点分别代表准备学习、入门学习、能够运用和持续提高。</p>
+        </div>
+        <div class="skill-list">${skillMarkup}</div>
+      </div>
+    </section>
+
     <section class="moments" id="moments">
       <div class="moment-photo">
         <picture>
           <source srcset="./public/images/qianbingyuan-mountain.webp" type="image/webp" />
           <img src="./public/images/qianbingyuan-mountain.jpg" width="1280" height="1707" alt="钱炳元登山时的生活照" loading="lazy" decoding="async" />
         </picture>
-        <span class="photo-no">03</span>
+        <span class="photo-no">05</span>
       </div>
       <div class="moment-copy">
-        <p class="section-index">03 / 片刻</p>
+        <p class="section-index">05 / 片刻</p>
         <p class="big-quote">“向上走，<br>风景自然会来。”</p>
         <p>脚步丈量远方，镜头收藏当下。生活不是等待答案，而是在出发中写下答案。</p>
         <div class="coordinates">30.1° N&nbsp;&nbsp; 118.2° E<br><span>黄山 · 中国</span></div>
@@ -113,7 +265,7 @@ document.querySelector('#app').innerHTML = `
 
     <section class="interests" id="interests" aria-labelledby="interests-title">
       <div class="interests-intro">
-        <p class="section-index">04 / 我的热爱</p>
+        <p class="section-index">06 / 兴趣生活</p>
         <h2 id="interests-title">我喜欢的，<br>都在<span>生活里</span>。</h2>
         <p>一场晚霞、一次出发、一件亲手完成的小作品，都是我认真生活的方式。</p>
       </div>
@@ -197,7 +349,7 @@ document.querySelector('#app').innerHTML = `
 
     <section class="contact" id="contact">
       <div>
-        <p class="section-index light">05 / 联系我</p>
+        <p class="section-index light">07 / 联系我</p>
         <h2>很高兴<br>认识你<span>。</span></h2>
       </div>
       <div class="contact-card">
@@ -227,16 +379,40 @@ document.querySelector('#app').innerHTML = `
 
   <dialog class="image-viewer" aria-label="照片预览">
     <button class="viewer-close" type="button" aria-label="关闭照片预览">×</button>
+    <button class="viewer-nav viewer-prev" type="button" aria-label="查看上一张照片">←</button>
     <figure>
       <img src="" alt="" />
       <figcaption></figcaption>
     </figure>
+    <button class="viewer-nav viewer-next" type="button" aria-label="查看下一张照片">→</button>
+    <p class="viewer-count" aria-live="polite"></p>
   </dialog>
 `
 
 const nav = document.querySelector('[data-nav]')
 const menuToggle = document.querySelector('.menu-toggle')
 const siteNav = document.querySelector('#site-nav')
+const themeToggle = document.querySelector('[data-theme-toggle]')
+const themeLabel = document.querySelector('[data-theme-label]')
+
+const updateThemeControl = () => {
+  const dark = document.documentElement.dataset.theme === 'dark'
+  themeLabel.textContent = dark ? '浅色' : '深色'
+  themeToggle.setAttribute('aria-label', dark ? '切换为浅色主题' : '切换为深色主题')
+}
+
+updateThemeControl()
+
+themeToggle.addEventListener('click', () => {
+  const nextTheme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'
+  document.documentElement.dataset.theme = nextTheme
+  try {
+    localStorage.setItem('qby-theme', nextTheme)
+  } catch {
+    // 隐私模式下仍然允许本次切换，只是不记住选择。
+  }
+  updateThemeControl()
+})
 
 const setMenu = (open) => {
   nav.classList.toggle('is-open', open)
@@ -304,19 +480,39 @@ const imageViewer = document.querySelector('.image-viewer')
 const viewerImage = imageViewer.querySelector('img')
 const viewerCaption = imageViewer.querySelector('figcaption')
 const viewerClose = imageViewer.querySelector('.viewer-close')
+const viewerPrev = imageViewer.querySelector('.viewer-prev')
+const viewerNext = imageViewer.querySelector('.viewer-next')
+const viewerCount = imageViewer.querySelector('.viewer-count')
+const galleryItems = [...document.querySelectorAll('[data-image]')]
+let activeImageIndex = 0
 
-document.querySelectorAll('[data-image]').forEach((button) => {
+const showImage = (index) => {
+  activeImageIndex = (index + galleryItems.length) % galleryItems.length
+  const button = galleryItems[activeImageIndex]
+  viewerImage.src = button.dataset.image
+  viewerImage.alt = button.getAttribute('aria-label').replace('放大查看', '')
+  viewerCaption.textContent = button.dataset.caption
+  viewerCount.textContent = `${activeImageIndex + 1} / ${galleryItems.length}`
+}
+
+galleryItems.forEach((button, index) => {
   button.addEventListener('click', () => {
-    viewerImage.src = button.dataset.image
-    viewerImage.alt = button.getAttribute('aria-label').replace('放大查看', '')
-    viewerCaption.textContent = button.dataset.caption
+    showImage(index)
     imageViewer.showModal()
   })
 })
 
 viewerClose.addEventListener('click', () => imageViewer.close())
+viewerPrev.addEventListener('click', () => showImage(activeImageIndex - 1))
+viewerNext.addEventListener('click', () => showImage(activeImageIndex + 1))
 imageViewer.addEventListener('click', (event) => {
   if (event.target === imageViewer) imageViewer.close()
+})
+
+document.addEventListener('keydown', (event) => {
+  if (!imageViewer.open) return
+  if (event.key === 'ArrowLeft') showImage(activeImageIndex - 1)
+  if (event.key === 'ArrowRight') showImage(activeImageIndex + 1)
 })
 
 document.querySelector('[data-current-year]').textContent = new Date().getFullYear()
