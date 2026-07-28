@@ -3,7 +3,8 @@ document.querySelector('#app').innerHTML = `
     <a class="brand" href="#top" aria-label="返回首页">QBY<span>.</span></a>
     <nav aria-label="主导航">
       <a href="#about">关于我</a>
-      <a href="#moments">生活片段</a>
+      <a href="#moments">在路上</a>
+      <a href="#interests">我的热爱</a>
       <a class="nav-contact" href="tel:18455070570">联系我</a>
     </nav>
   </header>
@@ -56,9 +57,68 @@ document.querySelector('#app').innerHTML = `
       </div>
     </section>
 
+    <section class="interests" id="interests" aria-labelledby="interests-title">
+      <div class="interests-intro">
+        <p class="section-index">03 / WHAT I LOVE</p>
+        <h2 id="interests-title">我喜欢的，<br>都在<span>生活里</span>。</h2>
+        <p>一场晚霞、一次出发、一件亲手完成的小作品，都是我认真生活的方式。</p>
+      </div>
+
+      <article class="story story-life">
+        <figure class="story-photo">
+          <img src="./public/images/life-sunset.jpg" alt="晚霞映在水面上的日常风景" loading="lazy" />
+          <figcaption>把日常过成值得收藏的片段</figcaption>
+        </figure>
+        <div class="story-copy">
+          <span class="story-no">01 / LIFE</span>
+          <p class="story-label">热爱生活</p>
+          <h3>留住平凡日子里的光。</h3>
+          <p>我喜欢留意身边细小而真实的美好：天边的晚霞、水面的倒影，还有每一个值得认真感受的当下。</p>
+        </div>
+      </article>
+
+      <article class="story story-travel">
+        <div class="travel-heading">
+          <div>
+            <span class="story-no">02 / TRAVEL</span>
+            <p class="story-label">喜欢旅游</p>
+          </div>
+          <h3>去看不同的风景，<br>也遇见不同的自己。</h3>
+          <p>在山水、古村与城市之间不断出发。旅行让我打开视野，也让我把一路的风景变成成长的记忆。</p>
+        </div>
+        <div class="travel-gallery" aria-label="旅行照片画廊">
+          <figure>
+            <img src="./public/images/travel-bridge.jpg" alt="古村水岸与石拱桥的旅行风景" loading="lazy" />
+            <figcaption><span>01</span> 古村水岸</figcaption>
+          </figure>
+          <figure>
+            <img src="./public/images/travel-mountain.jpg" alt="钱炳元在云雾山间旅行" loading="lazy" />
+            <figcaption><span>02</span> 山间云雾</figcaption>
+          </figure>
+          <figure>
+            <img src="./public/images/travel-city-lake.jpg" alt="钱炳元在城市湖畔旅行" loading="lazy" />
+            <figcaption><span>03</span> 城市湖畔</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="story story-maker">
+        <div class="story-copy">
+          <span class="story-no">03 / HANDMADE</span>
+          <p class="story-label">喜欢动手</p>
+          <h3>把想法，<br>一点点做成现实。</h3>
+          <p>从一颗颗拼豆到完整的作品，动手的过程让我专注，也让我享受创造带来的成就感。</p>
+        </div>
+        <figure class="story-photo">
+          <img src="./public/images/hands-on-beads.jpg" alt="亲手制作拼豆作品的过程" loading="lazy" />
+          <figcaption>专注过程，也享受完成的喜悦</figcaption>
+        </figure>
+      </article>
+    </section>
+
     <section class="contact" id="contact">
       <div>
-        <p class="section-index light">03 / CONTACT</p>
+        <p class="section-index light">04 / CONTACT</p>
         <h2>很高兴<br>认识你<span>。</span></h2>
       </div>
       <div class="contact-card">
