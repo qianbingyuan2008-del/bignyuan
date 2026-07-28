@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>页面走远了｜钱炳元</title>
+    <link rel="icon" href="./public/favicon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+        background: #f1eadf;
+        color: #191714;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background:
+          radial-gradient(circle at 82% 16%, rgba(196, 62, 42, 0.18), transparent 28%),
+          linear-gradient(135deg, #f7f1e8 0 54%, #e4d8c8 54% 100%);
+      }
+
+      main {
+        width: min(720px, 100%);
+        padding: clamp(32px, 7vw, 72px);
+        border: 1px solid rgba(25, 23, 20, 0.22);
+        background: rgba(255, 252, 246, 0.82);
+        box-shadow: 18px 18px 0 #191714;
+      }
+
+      .code {
+        margin: 0;
+        color: #bd3827;
+        font-size: clamp(4rem, 18vw, 9rem);
+        font-weight: 900;
+        line-height: 0.85;
+        letter-spacing: -0.08em;
+      }
+
+      h1 {
+        margin: 28px 0 12px;
+        font-size: clamp(1.8rem, 5vw, 3.2rem);
+      }
+
+      p {
+        max-width: 32rem;
+        margin: 0 0 28px;
+        color: #5c554d;
+        line-height: 1.8;
+      }
+
+      a {
+        display: inline-flex;
+        padding: 13px 20px;
+        border: 1px solid #191714;
+        background: #191714;
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 160ms ease;
+      }
+
+      a:hover,
+      a:focus-visible {
+        translate: -3px -3px;
+        box-shadow: 5px 5px 0 #bd3827;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="code" aria-label="错误代码 404">404</p>
+      <h1>这条路暂时没有风景</h1>
+      <p>你访问的页面可能已经移动，或者链接写错了。回到主页，继续认识钱炳元。</p>
+      <a href="/">返回个人主页</a>
+    </main>
+  </body>
+</html>

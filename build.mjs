@@ -12,21 +12,33 @@ await cp('.openai/hosting.json', 'dist/.openai/hosting.json')
 await cp('public', 'dist/public', { recursive: true })
 await cp('CNAME', 'dist/CNAME')
 await cp('.nojekyll', 'dist/.nojekyll')
+await cp('404.html', 'dist/404.html')
+await cp('robots.txt', 'dist/robots.txt')
+await cp('sitemap.xml', 'dist/sitemap.xml')
 
-const imagePaths = [
-  'qianbingyuan-portrait.jpg',
-  'qianbingyuan-mountain.jpg',
-  'life-sunset.jpg',
-  'travel-bridge.jpg',
-  'travel-mountain.jpg',
-  'travel-city-lake.jpg',
-  'hands-on-beads.jpg'
+const inlineAssets = [
+  { path: 'public/images/qianbingyuan-portrait.jpg', mime: 'image/jpeg' },
+  { path: 'public/images/qianbingyuan-mountain.jpg', mime: 'image/jpeg' },
+  { path: 'public/images/life-sunset.jpg', mime: 'image/jpeg' },
+  { path: 'public/images/travel-bridge.jpg', mime: 'image/jpeg' },
+  { path: 'public/images/travel-mountain.jpg', mime: 'image/jpeg' },
+  { path: 'public/images/travel-city-lake.jpg', mime: 'image/jpeg' },
+  { path: 'public/images/hands-on-beads.jpg', mime: 'image/jpeg' },
+  { path: 'public/images/qianbingyuan-portrait.webp', mime: 'image/webp' },
+  { path: 'public/images/qianbingyuan-mountain.webp', mime: 'image/webp' },
+  { path: 'public/images/life-sunset.webp', mime: 'image/webp' },
+  { path: 'public/images/travel-bridge.webp', mime: 'image/webp' },
+  { path: 'public/images/travel-mountain.webp', mime: 'image/webp' },
+  { path: 'public/images/travel-city-lake.webp', mime: 'image/webp' },
+  { path: 'public/images/hands-on-beads.webp', mime: 'image/webp' },
+  { path: 'public/images/social-cover-og.png', mime: 'image/png' },
+  { path: 'public/favicon.svg', mime: 'image/svg+xml' }
 ]
 const images = new Map()
 
-for (const imagePath of imagePaths) {
-  const data = (await readFile(`public/images/${imagePath}`)).toString('base64')
-  images.set(`./public/images/${imagePath}`, `data:image/jpeg;base64,${data}`)
+for (const asset of inlineAssets) {
+  const data = (await readFile(asset.path)).toString('base64')
+  images.set(`./${asset.path}`, `data:${asset.mime};base64,${data}`)
 }
 
 const css = await readFile('src/style.css', 'utf8')
