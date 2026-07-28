@@ -36,12 +36,13 @@ document.querySelector('#app').innerHTML = `
         </div>
       </div>
       <div class="hero-visual reveal delay-2">
-        <div class="photo-frame">
+        <button class="photo-frame photo-button" type="button" data-image="./public/images/qianbingyuan-portrait.jpg" data-caption="钱炳元在徽州宏村" aria-label="放大查看钱炳元在徽州宏村的完整照片">
           <picture>
             <source srcset="./public/images/qianbingyuan-portrait.webp" type="image/webp" />
             <img src="./public/images/qianbingyuan-portrait.jpg" width="1280" height="1707" alt="钱炳元在徽州宏村的生活照" fetchpriority="high" decoding="async" />
           </picture>
-        </div>
+          <span class="photo-hint">点击查看完整照片</span>
+        </button>
         <p class="vertical">保持好奇 · 持续成长</p>
         <div class="focus-stamp"><b>学</b><span>学习<br>创造</span></div>
       </div>
